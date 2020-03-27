@@ -1,9 +1,6 @@
 "use strict"
 const fs = require('fs');
 
-
-
-
 const { Board } = require("./board");
 
 let myBoar = new Board(10, 10);
@@ -11,9 +8,6 @@ let myBoar = new Board(10, 10);
 function boardParser()
 {
     const me = fs.readFileSync("./board.txt", "utf8");
-
-    console.log(me[0]);
-
 }
 
 boardParser();

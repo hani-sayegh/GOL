@@ -1,5 +1,7 @@
 const { Cell } = require("./Cell");
 require('colors')
+const logUpdate = require('log-update');
+
 
 class Board
 {
@@ -62,7 +64,7 @@ class Board
 
     displayBoard()
     {
-        console.log(this.toString());
+        logUpdate(this.toString());
     }
 
     toString()
