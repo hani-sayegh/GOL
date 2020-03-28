@@ -1,16 +1,22 @@
-CellState = {
-    ALIVE: 0,
-    DEAD: 1
-};
+import Board from './Board';
 
-class Cell
+export enum State { ALIVE, DEAD };
+
+export class Cell
 {
-    constructor(row, col, state, board)
+    row: number;
+    col: number;
+    state: State;
+    board: Board;
+    newState: State;
+
+    constructor(row: number, col: number, state: State, board: Board)
     {
         this.row = row;
         this.col = col;
         this.state = state;
         this.board = board;
+        this.newState = State.DEAD;
     }
 
     getNeighbors()
@@ -47,29 +53,28 @@ class Cell
         const alive = cell.aliveNeighborCount;
 
         if (cell.alive && (alive === 2 || alive === 3))
-            return CellState.ALIVE;
+            return State.ALIVE;
 
         if (cell.dead && alive === 3)
-            return CellState.ALIVE;
+            return State.ALIVE;
 
-        return CellState.DEAD;
+        return State.DEAD;
     }
 
     get aliveNeighborCount()
     {
-        return this.getNeighbors().filter(x => x.state === CellState.ALIVE).length;
+        return this.getNeighbors().filter(x => x.state === State.ALIVE).length;
     }
     get dead()
     {
-        return this.state === CellState.DEAD;
+        return this.state === State.DEAD;
     }
     get alive()
     {
-        return this.state === CellState.ALIVE;
+        return this.state === State.ALIVE;
     }
     get deadNeighborCount()
     {
-        return this.getNeighbors().filter(x => x.state === CellState.DEAD).length;
+        return this.getNeighbors().filter(x => x.state === State.DEAD).length;
     }
 }
-exports.Cell = Cell;

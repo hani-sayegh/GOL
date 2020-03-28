@@ -1,11 +1,15 @@
-const { Cell } = require("./Cell");
-require('colors')
-const logUpdate = require('log-update');
+import { Cell, State } from "./Cell";
+import colors from 'colors';
+import logUpdate from 'log-update';
 
-
-class Board
+export default class Board
 {
-    constructor(rowCount, colCount)
+    rN: number;
+    cN: number;
+    board: Array<Array<Cell>>;
+    boardCopy: Array<Cell>;
+
+    constructor(rowCount: number, colCount: number)
     {
         this.rN = rowCount;
         this.cN = colCount;
@@ -13,23 +17,25 @@ class Board
         console.log("Creating board with: ", rowCount, colCount);
 
         this.board = new Array(rowCount);
+        this.boardCopy = new Array(rowCount * colCount);
 
         for (var r = 0; r != rowCount; r++)
         {
             this.board[r] = new Array(colCount);
             for (var c = 0; c < colCount; ++c)
             {
-                this.board[r][c] = new Cell(r, c, CellState.DEAD, this);
+                this.board[r][c] = new Cell(r, c, State.DEAD, this);
+                this.boardCopy[r * colCount + c] = this.board[r][c];
             }
         }
     }
 
-    setAlive(row, col)
+    setAlive(row: number, col: number)
     {
-        this.board[row][col].state = CellState.ALIVE;
+        this.board[row][col].state = State.ALIVE;
     }
 
-    tryGetCell(row, col)
+    tryGetCell(row: number, col: number)
     {
         if (!(row < 0 || col < 0 || row > this.rN - 1 || col > this.cN - 1))
         {
@@ -38,24 +44,13 @@ class Board
         return null;
     }
 
-    *[Symbol.iterator]()
-    {
-        for (var r = 0; r != this.rN; r++)
-        {
-            for (var c = 0; c < this.cN; ++c)
-            {
-                yield this.board[r][c];
-            }
-        }
-    }
-
     updateState()
     {
-        for (let cell of this)
+        for (let cell of this.boardCopy)
         {
             cell.updateNewState();
         }
-        for (let cell of this)
+        for (let cell of this.boardCopy)
         {
             cell.update();
         }
@@ -68,15 +63,15 @@ class Board
 
     toString()
     {
-        const aliveChar = 'A'.green;
-        const deadChar = 'D'.red;
+        const aliveChar = colors.green('A');
+        const deadChar = colors.red('D');
 
         let res = "";
         for (var r = 0; r != this.rN; r++)
         {
             for (var c = 0; c < this.cN; ++c)
             {
-                res += this.board[r][c].state === CellState.DEAD ? deadChar : aliveChar;
+                res += this.board[r][c].state === State.DEAD ? deadChar : aliveChar;
                 res += ' ';
             }
             res += '\n';
@@ -84,5 +79,3 @@ class Board
         return res;
     }
 }
-
-module.exports = { Board, CellState };

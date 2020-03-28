@@ -1,23 +1,23 @@
 "use strict"
 const fs = require('fs');
 
-const { Board } = require("./board");
+import Board from "./Board";
 
 
 
-const ra = JSON.parse(fs.readFileSync("./board.txt", "utf8"));
+const boardConfig = JSON.parse(fs.readFileSync("./board.txt", "utf8"));
 
-let myBoar = new Board(ra.row, ra.col);
-for (let point of ra.aliveCells)
+let board = new Board(boardConfig.row, boardConfig.col);
+for (let point of boardConfig.aliveCells)
 {
-    myBoar.setAlive(point[0], point[1]);
+    board.setAlive(point[0], point[1]);
 }
 
 
 setInterval(() =>
 {
-    myBoar.displayBoard();
-    myBoar.updateState()
+    board.displayBoard();
+    board.updateState()
 }, 1000);
 
 
