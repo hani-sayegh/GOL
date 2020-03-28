@@ -3,14 +3,16 @@ const fs = require('fs');
 
 const { Board } = require("./board");
 
-let myBoar = new Board(10, 10);
 
-function boardParser()
+
+const ra = JSON.parse(fs.readFileSync("./board.txt", "utf8"));
+
+let myBoar = new Board(ra.row, ra.col);
+for (let point of ra.aliveCells)
 {
-    const me = fs.readFileSync("./board.txt", "utf8");
+    myBoar.setAlive(point[0], point[1]);
 }
 
-boardParser();
 
 setInterval(() =>
 {

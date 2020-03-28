@@ -22,9 +22,11 @@ class Cell
         {
             const newR = r[i] + this.row;
             const newC = c[i] + this.col;
-            if (this.board.isValid(newR, newC))
+
+            const cell = this.board.tryGetCell(newR, newC);
+            if (cell)
             {
-                res.push(this.board.get(newR, newC));
+                res.push(cell);
             }
         }
         return res;

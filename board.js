@@ -22,21 +22,20 @@ class Board
                 this.board[r][c] = new Cell(r, c, CellState.DEAD, this);
             }
         }
-
-        this.board[5][5].state = CellState.ALIVE;
-        this.board[6][5].state = CellState.ALIVE;
-        this.board[7][5].state = CellState.ALIVE;
-
     }
 
-    get(row, col)
+    setAlive(row, col)
     {
-        return this.board[row][col];
+        this.board[row][col].state = CellState.ALIVE;
     }
 
-    isValid(row, col)
+    tryGetCell(row, col)
     {
-        return !(row < 0 || col < 0 || row > this.rN - 1 || col > this.cN - 1);
+        if (!(row < 0 || col < 0 || row > this.rN - 1 || col > this.cN - 1))
+        {
+            return this.board[row][col];
+        }
+        return null;
     }
 
     *[Symbol.iterator]()
