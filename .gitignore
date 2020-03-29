@@ -3,3 +3,5 @@ node_modules/
 test/
 .babelrc
 .eslintrc.js
+generatedjs/
+build/

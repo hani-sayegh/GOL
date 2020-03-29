@@ -2,10 +2,9 @@
 const fs = require('fs');
 
 import Board from "./Board";
+import ConsoleViewer from "./ConsoleViewer";
 
-
-
-const boardConfig = JSON.parse(fs.readFileSync("./board.txt", "utf8"));
+const boardConfig = JSON.parse(fs.readFileSync("config/board.json", "utf8"));
 
 let board = new Board(boardConfig.row, boardConfig.col);
 for (let point of boardConfig.aliveCells)
@@ -16,7 +15,7 @@ for (let point of boardConfig.aliveCells)
 
 setInterval(() =>
 {
-    board.displayBoard();
+    ConsoleViewer(board);
     board.updateState()
 }, 1000);
 

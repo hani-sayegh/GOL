@@ -1,6 +1,4 @@
 import { Cell, State } from "./Cell";
-import colors from 'colors';
-import logUpdate from 'log-update';
 
 export default class Board
 {
@@ -30,6 +28,20 @@ export default class Board
         }
     }
 
+
+    *[Symbol.iterator]()
+    {
+        for (const cell of this.boardCopy)
+        {
+            yield cell;
+        }
+    }
+
+    getCell(row: number, col: number)
+    {
+        return this.board[row][col];
+    }
+
     setAlive(row: number, col: number)
     {
         this.board[row][col].state = State.ALIVE;
@@ -56,20 +68,39 @@ export default class Board
         }
     }
 
-    displayBoard()
+
+
+    toJson()
     {
-        logUpdate(this.toString());
+
+        const alive = [];
+        for (let r = 0; r != this.rN; ++r)
+        {
+            for (let c = 0; c < this.cN; ++c)
+            {
+                if (this.board[r][c].alive)
+                    alive.push([r, c]);
+            }
+        }
+
+        const jsonConfig = {
+            row: this.rN,
+            col: this.cN,
+            aliveCells: alive
+        }
+
+        return JSON.stringify(jsonConfig);
     }
 
-    toString()
+    toString(): string
     {
-        const aliveChar = colors.green('A');
-        const deadChar = colors.red('D');
+        const aliveChar = 'A';
+        const deadChar = 'D';
 
         let res = "";
-        for (var r = 0; r != this.rN; r++)
+        for (let r = 0; r != this.rN; ++r)
         {
-            for (var c = 0; c < this.cN; ++c)
+            for (let c = 0; c < this.cN; ++c)
             {
                 res += this.board[r][c].state === State.DEAD ? deadChar : aliveChar;
                 res += ' ';
