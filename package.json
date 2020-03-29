@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --require @babel/register",
-    "build": "rm -rf generatedjs/ && tsc && browserify ./generatedjs/frontend/index.js -o ./build/bundle.js"
+    "build": "rm -rf generatedjs/ && rm -rf build/ && mkdir build && tsc && browserify ./generatedjs/frontend/index.js | uglifyjs > ./build/bundle.js"
   },
   "author": "Hani Sayegh",
   "license": "ISC",
