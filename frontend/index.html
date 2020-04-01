@@ -10,10 +10,19 @@
 </head>
 
 <body>
+    <div class="slidecontainer">
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+    </div>
     <div id="grid"></div>
-    <button>Start Simulation</button>
+
+    <div>
+        <button id="play" class="btn">
+
+            <img src="../frontend/imgs/play.svg">
+        </button>
+    </div>
+    <div><button id="theme"></button></div>
 </body>
-<!-- for ts-->
 <script type="module" src="../build/bundle.js"></script>
 
 </html>
