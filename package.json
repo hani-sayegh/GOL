@@ -13,7 +13,7 @@
     "chai": "^4.2.0",
     "colors": "^1.4.0",
     "log-update": "^4.0.0",
-    "mocha": "^7.1.1"
+    "mocha": "^10.2.0"
   },
   "devDependencies": {
     "@types/node": "^13.9.5",
